@@ -1,0 +1,21 @@
+# Ignore distribution / packaging
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environments
+conversation_insights/
+
+# Ignore env filess
+.env
+
+# Ignore audio files
+data/audio/*
+!data/audio/.keep
+
+# Ignore generated transcripts
+data/transcripts/*
+!data/transcripts/.keep
+
+# Ignore os files
+.DS_Store
