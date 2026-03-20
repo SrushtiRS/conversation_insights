@@ -1,9 +1,23 @@
-import sys
+import argparse
 from pathlib import Path
 
 from app.transcribe import transcribe_audio
 
 # TODO: add logging
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description="Transcribe audio files and gain intelligent insights"
+    )
+
+    parser.add_argument(
+        "-i",
+        "--input-path",
+        help="Path to the input file/folder to be transcribed and analyzed"
+    )
+
+    return parser.parse_args()
+
 
 def validate_input_file(audio_file_path):
     """
@@ -35,11 +49,10 @@ def save_transcript(audio_file_path, transcript_text):
     return output_path
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python app.py audio_file_path")
-        sys.exit(1)
+    
+    arguments = parse_arguments()
 
-    input_file = sys.argv[1]
+    input_file = arguments.input_path
 
     audio_file_path = validate_input_file(input_file)
 
