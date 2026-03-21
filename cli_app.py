@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from app.transcribe import transcribe_audio
+from app.transcribe import load_transcription_model, transcribe_audio
 
 # TODO: add logging
 
@@ -14,6 +14,13 @@ def parse_arguments():
         "-i",
         "--input-path",
         help="Path to the input file/folder to be transcribed and analyzed"
+    )
+
+    parser.add_argument(
+        "-m",
+        "--model-name",
+        default="medium",
+        help="Choose a Whisper trascription model from 'base', 'medium', 'large'."
     )
 
     return parser.parse_args()
@@ -53,12 +60,14 @@ def main():
     arguments = parse_arguments()
 
     input_file = arguments.input_path
+    model_name = arguments.model_name
 
     audio_file_path = validate_input_file(input_file)
 
     print(f"Transcribing {str(audio_file_path)} ...")
 
-    transcript_text = transcribe_audio(str(audio_file_path))
+    model = load_transcription_model(model_name)
+    transcript_text = transcribe_audio(str(audio_file_path), model)
 
     output_path = save_transcript(audio_file_path, transcript_text)
 
