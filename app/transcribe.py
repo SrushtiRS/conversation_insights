@@ -5,5 +5,5 @@ def load_transcription_model(model_name="medium"):
     return model
 
 def transcribe_audio(file_path, model):
-    result = model.transcribe(file_path, language="en")
+    result = model.transcribe(file_path.as_posix(), language="en")
     return result["text"]
