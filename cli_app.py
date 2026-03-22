@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 
 from app.file_utils import validate_input
-from app.output import save_transcript
+from app.output import save_transcript, separate_segments
 from app.transcribe import load_transcription_model, transcribe_audio
 
 # TODO: add logging
@@ -40,7 +40,8 @@ def main():
     model = load_transcription_model(model_name)
     for file_path in file_paths:
         print(f"Transcribing {file_path.as_posix()}")
-        transcript_text = transcribe_audio(file_path, model)
+        transcription_result = transcribe_audio(file_path, model)
+        transcript_text = separate_segments(transcription_result)
         output_path = save_transcript(file_path, transcript_text)
         print(f"Transcript saved to {output_path}")
    
